@@ -91,8 +91,9 @@ export const NotificationDropdown = () => {
   }, []);
 
   const handleNotificationClick = (notification) => {
-    if (!notification.read) {
-      markAsRead(notification.id);
+    const id = notification._id || notification.id;
+    if (!notification.read && id) {
+      markAsRead(id);
     }
     if (notification.actionUrl) {
       window.location.href = notification.actionUrl;
@@ -169,7 +170,7 @@ export const NotificationDropdown = () => {
                   
                   return (
                     <div
-                      key={notification.id}
+                      key={notification._id || notification.id}
                       onClick={() => handleNotificationClick(notification)}
                       className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
                         !notification.read ? "bg-blue-50/50" : ""

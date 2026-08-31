@@ -37,13 +37,24 @@ export const useNotificationStore = create((set, get) => ({
   },
 
   markAsRead: async (id) => {
+    // Optimistic update
+    set((state) => {
+      const isUnread = state.notifications.find((n) => (n._id || n.id) === id && !n.read);
+      return {
+        notifications: state.notifications.map((n) =>
+          (n._id || n.id) === id ? { ...n, read: true } : n
+        ),
+        unreadCount: isUnread ? Math.max(0, state.unreadCount - 1) : state.unreadCount,
+      };
+    });
+
     try {
       const updatedNotification = await markNotificationRead(id, true);
+      // Optional: Update with actual backend response if needed
       set((state) => ({
         notifications: state.notifications.map((n) =>
-          n.id === id ? updatedNotification : n
+          (n._id || n.id) === id ? { ...n, ...updatedNotification } : n
         ),
-        unreadCount: Math.max(0, state.unreadCount - 1),
       }));
     } catch (error) {
       console.error("Failed to mark notification as read:", error);
@@ -53,12 +64,14 @@ export const useNotificationStore = create((set, get) => ({
   markAllAsRead: async (customerEmail) => {
     if (!customerEmail) return;
     
+    // Optimistic update
+    set((state) => ({
+      notifications: state.notifications.map((n) => ({ ...n, read: true })),
+      unreadCount: 0,
+    }));
+
     try {
       await markAllNotificationsRead(customerEmail);
-      set((state) => ({
-        notifications: state.notifications.map((n) => ({ ...n, read: true })),
-        unreadCount: 0,
-      }));
     } catch (error) {
       console.error("Failed to mark all as read:", error);
     }
