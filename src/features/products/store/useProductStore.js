@@ -36,7 +36,7 @@ export const useProductStore = create((set, get) => ({
         ...p, 
         id: p.id,
         category: p.category || 'Accessories',
-        imageUrl: p.imageUrl ? (p.imageUrl.startsWith('http') ? p.imageUrl : p.imageUrl) : p.imageUrl
+        imageUrl: p.imageUrl ? (p.imageUrl.startsWith('http') ? p.imageUrl : `https://shopmodern-backend.onrender.com${p.imageUrl}`) : p.imageUrl
       }));
       
       set({ 
@@ -72,7 +72,7 @@ export const useProductStore = create((set, get) => ({
         ...p, 
         id: p.id,
         category: p.category || 'Accessories',
-        imageUrl: p.imageUrl ? (p.imageUrl.startsWith('http') ? p.imageUrl : p.imageUrl) : p.imageUrl
+        imageUrl: p.imageUrl ? (p.imageUrl.startsWith('http') ? p.imageUrl : `https://shopmodern-backend.onrender.com${p.imageUrl}`) : p.imageUrl
       }));
       
       set({ 
