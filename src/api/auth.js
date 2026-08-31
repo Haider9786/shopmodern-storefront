@@ -1,7 +1,7 @@
-const BASE_URL = "/api";
+const BASE_URL = "https://shopmodern-backend.onrender.com/api";
 
 export async function signup({ name, email, password }) {
-  const response = await fetch(`${BASE_URL}/api/accounts/signup`, {
+  const response = await fetch(`${BASE_URL}/accounts/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
@@ -16,7 +16,7 @@ export async function signup({ name, email, password }) {
 }
 
 export async function login({ email, password }) {
-  const response = await fetch(`${BASE_URL}/api/accounts/login`, {
+  const response = await fetch(`${BASE_URL}/accounts/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -31,7 +31,7 @@ export async function login({ email, password }) {
 }
 
 export async function updateAccount(id, updates) {
-  const response = await fetch(`${BASE_URL}/api/accounts/${id}`, {
+  const response = await fetch(`${BASE_URL}/accounts/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updates),

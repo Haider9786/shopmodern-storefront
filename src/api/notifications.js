@@ -1,20 +1,20 @@
-const BASE_URL = "/api";
+const BASE_URL = "https://shopmodern-backend.onrender.com/api";
 
 export async function fetchNotifications(customerEmail) {
-  const response = await fetch(`${BASE_URL}/api/notifications?customerEmail=${encodeURIComponent(customerEmail)}`);
+  const response = await fetch(`${BASE_URL}/notifications?customerEmail=${encodeURIComponent(customerEmail)}`);
   if (!response.ok) throw new Error("Failed to fetch notifications");
   const data = await response.json();
   return data;
 }
 
 export async function fetchUnreadCount(customerEmail) {
-  const response = await fetch(`${BASE_URL}/api/notifications/unread/count?customerEmail=${encodeURIComponent(customerEmail)}`);
+  const response = await fetch(`${BASE_URL}/notifications/unread/count?customerEmail=${encodeURIComponent(customerEmail)}`);
   if (!response.ok) throw new Error("Failed to fetch unread count");
   return response.json();
 }
 
 export async function markNotificationRead(id, read) {
-  const response = await fetch(`${BASE_URL}/api/notifications/${id}`, {
+  const response = await fetch(`${BASE_URL}/notifications/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ read }),
@@ -25,7 +25,7 @@ export async function markNotificationRead(id, read) {
 }
 
 export async function markAllNotificationsRead(customerEmail) {
-  const response = await fetch(`${BASE_URL}/api/notifications/mark-all/read`, {
+  const response = await fetch(`${BASE_URL}/notifications/mark-all/read`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ customerEmail }),
