@@ -16,6 +16,7 @@ import {
 import { Container } from "../components/layout/Container";
 import { Card } from "../components/ui/Card";
 import { useProductStore } from "../features/products/store/useProductStore";
+import { getCategoryImage } from "../utils/categoryImages";
 
 const ICONS = {
   Peripherals: Monitor,
@@ -119,9 +120,7 @@ export const Categories = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {categories.map((cat) => {
               const Icon = getCategoryIcon(cat.name);
-              const heroImage =
-                cat.image ||
-                "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80";
+              const heroImage = getCategoryImage(cat.name);
               return (
                 <Card
                   key={cat.name}

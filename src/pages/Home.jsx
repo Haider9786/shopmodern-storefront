@@ -16,6 +16,7 @@ import { Card } from "../components/ui/Card";
 import { useProductStore } from "../features/products/store/useProductStore";
 import { formatCurrency } from "../utils/formatCurrency";
 import { ProductCard } from "../features/products/components/ProductCard";
+import { getCategoryImage } from "../utils/categoryImages";
 
 // Trust Value Props Bar
 const TRUST_BADGES = [
@@ -63,7 +64,7 @@ export const Home = () => {
       if (!categoryMap.has(category)) {
         categoryMap.set(category, {
           name: category,
-          image: product.imageUrl || `https://picsum.photos/seed/${encodeURIComponent(category)}/600/400`,
+          image: getCategoryImage(category),
           productCount: 1
         });
       } else {
