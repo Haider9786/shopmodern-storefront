@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const API_BASE_URL = "https://shopmodern-backend.onrender.com/api";
+const API_BASE_URL = "/api";
 const POLL_INTERVAL = 30000; // 30 seconds
 const FOCUS_REFRESH_DELAY = 1000; // 1 second after tab focus
 

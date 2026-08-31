@@ -1,4 +1,4 @@
-const BASE_URL = "https://shopmodern-backend.onrender.com/api";
+const BASE_URL = "/api";
 
 export async function signup({ name, email, password }) {
   const response = await fetch(`${BASE_URL}/accounts/signup`, {

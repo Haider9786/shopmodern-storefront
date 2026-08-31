@@ -1,4 +1,4 @@
-const BASE_URL = "https://shopmodern-backend.onrender.com/api";
+const BASE_URL = "/api";
 
 export async function fetchNotifications(customerEmail) {
   const response = await fetch(`${BASE_URL}/notifications?customerEmail=${encodeURIComponent(customerEmail)}`);
