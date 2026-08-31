@@ -42,6 +42,22 @@ const formatTime = (dateString) => {
   return date.toLocaleDateString();
 };
 
+const fixTextSpaces = (str) => {
+  if (!str) return str;
+  // Fix missing spaces in dummy data
+  let fixed = str
+    .replace(/for\$/g, 'for $')
+    .replace(/hasbeen/g, 'has been ')
+    .replace(/placedsuccessfully/g, 'placed successfully')
+    .replace(/markedas/g, 'marked as ')
+    .replace(/delivered/g, 'delivered')
+    .replace(/cancelled/g, 'cancelled')
+    .replace(/shipped/g, 'shipped');
+  // Add space between lower and upper case if still concatenated
+  fixed = fixed.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return fixed.replace(/\s+/g, ' ').trim();
+};
+
 export const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -106,12 +122,20 @@ export const NotificationDropdown = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-96 max-w-md bg-white rounded-xl shadow-xl border border-gray-100 z-50 max-h-96 flex flex-col overflow-hidden">
+        <div className="absolute right-[-80px] sm:right-0 mt-2 w-[320px] sm:w-96 bg-white rounded-xl shadow-xl border border-gray-100 z-[60] max-h-[85vh] sm:max-h-96 flex flex-col overflow-hidden">
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
             <h3 className="font-semibold text-gray-900 text-sm">Notifications</h3>
-            <span className="text-xs text-gray-500">
-              {unreadCount} unread
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-gray-500">
+                {unreadCount} unread
+              </span>
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="text-gray-400 hover:text-gray-600 sm:hidden p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-gray-100 shrink-0">
@@ -158,14 +182,14 @@ export const NotificationDropdown = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between gap-2">
                             <p className="text-sm font-medium text-gray-900 break-words">
-                              {notification.title}
+                              {fixTextSpaces(notification.title)}
                             </p>
                             {!notification.read && (
                               <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0 mt-1" />
                             )}
                           </div>
                           <p className="text-xs text-gray-500 mt-1 break-words">
-                            {notification.message}
+                            {fixTextSpaces(notification.message)}
                           </p>
                           <div className="flex items-center gap-2 mt-2">
                             <span className="text-[10px] text-gray-400">
