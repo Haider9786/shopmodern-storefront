@@ -15,6 +15,7 @@ import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { useProductStore } from "../features/products/store/useProductStore";
 import { formatCurrency } from "../utils/formatCurrency";
+import { ProductCard } from "../features/products/components/ProductCard";
 
 // Trust Value Props Bar
 const TRUST_BADGES = [
@@ -216,30 +217,7 @@ export const Home = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {trendingProducts.map((prod) => (
-                <Card key={prod.id} className="group overflow-hidden border border-gray-100 p-2.5 sm:p-3 flex flex-col justify-between min-w-0 h-full">
-                  <div className="min-w-0">
-                    <div className="relative h-32 sm:h-36 w-full rounded-lg overflow-hidden bg-gray-50 mb-2 sm:mb-3">
-                      <img
-                        src={prod.imageUrl || `https://picsum.photos/seed/${encodeURIComponent(prod.name)}/400/300`}
-                        alt={prod.name}
-                        className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <button className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 min-h-[32px] min-w-[32px] rounded-full bg-white/80 hover:bg-white text-gray-600 shadow-sm transition-colors flex items-center justify-center">
-                        <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      </button>
-                    </div>
-
-                    <span className="text-[10px] sm:text-xs font-extrabold text-gray-400 uppercase tracking-wider break-words">{prod.category || 'General'}</span>
-                    <h3 className="text-xs sm:text-sm font-extrabold text-brand-on-surface line-clamp-2 mt-0.5 break-words">{prod.name}</h3>
-                  </div>
-
-                  <div className="flex items-center justify-between mt-3 sm:mt-4 pt-2 border-t border-gray-100 gap-2">
-                    <span className="text-xs sm:text-sm font-extrabold text-brand-on-surface shrink-0">{formatCurrency(prod.price)}</span>
-                    <button className="p-2 min-h-[36px] min-w-[36px] rounded-lg bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors flex items-center justify-center shrink-0">
-                      <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </button>
-                  </div>
-                </Card>
+                <ProductCard key={prod.id} product={prod} />
               ))}
             </div>
           )}
