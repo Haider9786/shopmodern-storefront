@@ -114,11 +114,11 @@ export const NotificationDropdown = () => {
           />
           
           {/* Dropdown */}
-          <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-80 max-w-sm bg-white rounded-xl shadow-xl border border-gray-100 z-50 md:z-30 max-h-[70vh] sm:max-h-96 flex flex-col">
-            <div className="p-3 sm:p-4 border-b border-gray-100 flex items-center justify-between gap-2 min-w-0">
+          <div className="absolute right-0 mt-2 w-[calc(100vw-1rem)] sm:w-80 max-w-sm bg-white rounded-xl shadow-xl border border-gray-100 z-50 md:z-30 max-h-[70vh] sm:max-h-96 flex flex-col overflow-hidden">
+            <div className="p-3 sm:p-4 border-b border-gray-100 flex items-center justify-between gap-2">
               <div className="flex items-center justify-between flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 text-sm break-words">Notifications</h3>
-                <span className="text-[10px] sm:text-xs text-gray-500 shrink-0">
+                <h3 className="font-semibold text-gray-900 text-sm truncate">Notifications</h3>
+                <span className="text-[10px] sm:text-xs text-gray-500 shrink-0 ml-2">
                   {unreadCount} unread
                 </span>
               </div>
@@ -131,7 +131,7 @@ export const NotificationDropdown = () => {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-gray-50 border-b border-gray-100">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-gray-50 border-b border-gray-100 shrink-0">
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkAllRead}
@@ -153,7 +153,7 @@ export const NotificationDropdown = () => {
               ) : notifications.length === 0 ? (
                 <div className="p-6 sm:p-8 text-center">
                   <Bell className="w-10 h-10 sm:w-12 sm:h-12 text-gray-300 mx-auto mb-2 sm:mb-3" />
-                  <p className="text-gray-500 text-xs sm:text-sm break-words">No notifications yet</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">No notifications yet</p>
                 </div>
               ) : (
                 <div className="divide-y divide-gray-50">
@@ -164,27 +164,27 @@ export const NotificationDropdown = () => {
                       <div
                         key={notification.id}
                         onClick={() => handleNotificationClick(notification)}
-                        className={`p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors min-w-0 ${
+                        className={`p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
                           !notification.read ? "bg-blue-50/50" : ""
                         }`}
                       >
-                        <div className="flex items-start gap-2 sm:gap-3 min-w-0">
+                        <div className="flex items-start gap-2 sm:gap-3">
                           <div className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${!notification.read ? "bg-blue-100" : "bg-gray-100"}`}>
                             <CategoryIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${typeColors[notification.type]}`} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 min-w-0">
-                              <p className="text-xs sm:text-sm font-medium text-gray-900 truncate break-words">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-xs sm:text-sm font-medium text-gray-900 truncate flex-1">
                                 {notification.title}
                               </p>
                               {!notification.read && (
                                 <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0 mt-1" />
                               )}
                             </div>
-                            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1 line-clamp-2 break-words">
+                            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1 line-clamp-2">
                               {notification.message}
                             </p>
-                            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-2 min-w-0">
+                            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-2">
                               <span className="text-[10px] text-gray-400 shrink-0">
                                 {formatTime(notification.createdAt)}
                               </span>
