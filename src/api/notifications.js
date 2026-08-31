@@ -25,10 +25,9 @@ export async function markNotificationRead(id, read) {
 }
 
 export async function markAllNotificationsRead(customerEmail) {
-  const response = await fetch(`${BASE_URL}/notifications/mark-all/read`, {
+  const response = await fetch(`${BASE_URL}/notifications/mark-all/read?customerEmail=${encodeURIComponent(customerEmail)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ customerEmail }),
   });
   if (!response.ok) throw new Error("Failed to mark all as read");
   return response.json();
