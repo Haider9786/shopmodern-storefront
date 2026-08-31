@@ -115,19 +115,19 @@ export const NotificationDropdown = () => {
           
           {/* Dropdown */}
           <div className="absolute right-0 mt-2 w-[calc(100vw-1rem)] sm:w-80 max-w-sm bg-white rounded-xl shadow-xl border border-gray-100 z-50 md:z-30 max-h-[70vh] sm:max-h-96 flex flex-col overflow-hidden">
-            <div className="p-3 sm:p-4 border-b border-gray-100 flex items-center justify-between gap-2">
-              <div className="flex items-center justify-between flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 text-sm truncate">Notifications</h3>
-                <span className="text-[10px] sm:text-xs text-gray-500 shrink-0 ml-2">
+            <div className="p-3 sm:p-4 border-b border-gray-100 flex items-center justify-between">
+              <h3 className="font-semibold text-gray-900 text-sm">Notifications</h3>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] sm:text-xs text-gray-500">
                   {unreadCount} unread
                 </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="md:hidden p-1 text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="md:hidden ml-2 p-1 text-gray-400 hover:text-gray-600 shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </button>
             </div>
 
             {/* Actions */}
@@ -135,12 +135,12 @@ export const NotificationDropdown = () => {
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkAllRead}
-                  className="text-[11px] sm:text-xs text-brand-primary hover:text-brand-primary-hover font-medium shrink-0 whitespace-nowrap"
+                  className="text-[11px] sm:text-xs text-brand-primary hover:text-brand-primary-hover font-medium"
                 >
                   Mark all read
                 </button>
               )}
-              <button className="text-[11px] sm:text-xs text-gray-500 hover:text-gray-700 font-medium shrink-0">
+              <button className="text-[11px] sm:text-xs text-gray-500 hover:text-gray-700 font-medium">
                 View all
               </button>
             </div>
@@ -172,23 +172,23 @@ export const NotificationDropdown = () => {
                           <div className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${!notification.read ? "bg-blue-100" : "bg-gray-100"}`}>
                             <CategoryIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${typeColors[notification.type]}`} />
                           </div>
-                          <div className="flex-1 min-w-0">
+                          <div className="flex-1">
                             <div className="flex items-start justify-between gap-2">
-                              <p className="text-xs sm:text-sm font-medium text-gray-900 truncate flex-1">
+                              <p className="text-xs sm:text-sm font-medium text-gray-900 flex-1 leading-tight">
                                 {notification.title}
                               </p>
                               {!notification.read && (
                                 <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0 mt-1" />
                               )}
                             </div>
-                            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1 line-clamp-2">
+                            <p className="text-[11px] sm:text-xs text-gray-500 mt-1 leading-relaxed">
                               {notification.message}
                             </p>
-                            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-2">
-                              <span className="text-[10px] text-gray-400 shrink-0">
+                            <div className="flex items-center gap-2 mt-2">
+                              <span className="text-[10px] text-gray-400">
                                 {formatTime(notification.createdAt)}
                               </span>
-                              <span className="text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 capitalize shrink-0">
+                              <span className="text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 capitalize">
                                 {notification.category}
                               </span>
                             </div>
