@@ -12,7 +12,7 @@ import { formatCurrency } from "../../../utils/formatCurrency";
 export const ProductCard = ({ product }) => {
   const { id, name, price, originalPrice, category, imageUrl, image, isNew, isSale } = product;
   const displayImage = imageUrl
-  ? (imageUrl.startsWith('http') ? imageUrl : `https://shopmodern-backend.onrender.com${imageUrl}`)
+  ? (imageUrl.startsWith('http') ? imageUrl : `/uploads/${imageUrl.split('/uploads/').pop()}`)
   : image;
   const addToCart = useCartStore((state) => state.addToCart);
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);

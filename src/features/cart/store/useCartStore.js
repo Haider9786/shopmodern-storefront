@@ -13,7 +13,8 @@ export const useCartStore = create(
         const image = rawImage
           ? rawImage.startsWith("http")
             ? rawImage
-            : `https://shopmodern-backend.onrender.com${rawImage}`
+            : `/uploads/${rawImage.split('/uploads/').pop()}`
+
           : rawImage;
         const normalized = { ...product, image, imageUrl: image, quantity };
 

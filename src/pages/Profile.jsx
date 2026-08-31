@@ -251,7 +251,7 @@ export const Profile = () => {
                             const image = rawImage
                               ? rawImage.startsWith("http")
                                 ? rawImage
-                                : `https://shopmodern-backend.onrender.com${rawImage}`
+                                : `/uploads/${rawImage.split('/uploads/').pop()}`
                               : null;
                             const initials = (item.name || "?")
                               .split(/\s+/)

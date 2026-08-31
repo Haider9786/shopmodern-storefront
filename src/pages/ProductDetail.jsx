@@ -68,7 +68,7 @@ export const ProductDetail = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start min-w-0">
           <div className="rounded-2xl overflow-hidden bg-gray-50 aspect-square border border-gray-100 shadow-sm w-full max-w-lg lg:max-w-none mx-auto lg:mx-0">
-            <img src={product.imageUrl ? (product.imageUrl.startsWith('http') ? product.imageUrl : `https://shopmodern-backend.onrender.com${product.imageUrl}`) : product.image} alt={product.name} className="w-full h-full max-w-full object-cover object-center" />
+            <img src={product.imageUrl ? (product.imageUrl.startsWith('http') ? product.imageUrl : `/uploads/${product.imageUrl.split('/uploads/').pop()}`) : product.image} alt={product.name} className="w-full h-full max-w-full object-cover object-center" />
           </div>
 
           <div className="space-y-4 sm:space-y-6 min-w-0">
