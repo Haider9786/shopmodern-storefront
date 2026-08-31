@@ -106,170 +106,84 @@ export const NotificationDropdown = () => {
       </button>
 
       {isOpen && (
-        <>
-          {/* Mobile full-screen modal */}
-          <div className="md:hidden fixed inset-0 z-50 flex flex-col bg-white">
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
-              <h3 className="font-semibold text-gray-900 text-lg">Notifications</h3>
+        <div className="absolute right-0 mt-2 w-96 max-w-md bg-white rounded-xl shadow-xl border border-gray-100 z-50 max-h-96 flex flex-col overflow-hidden">
+          <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 className="font-semibold text-gray-900 text-sm">Notifications</h3>
+            <span className="text-xs text-gray-500">
+              {unreadCount} unread
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-gray-100 shrink-0">
+            {unreadCount > 0 && (
               <button
-                onClick={() => setIsOpen(false)}
-                className="p-2 text-gray-400 hover:text-gray-600"
+                onClick={handleMarkAllRead}
+                className="text-xs text-brand-primary hover:text-brand-primary-hover font-medium"
               >
-                <X className="w-6 h-6" />
+                Mark all read
               </button>
-            </div>
+            )}
+            <button className="text-xs text-gray-500 hover:text-gray-700 font-medium">
+              View all
+            </button>
+          </div>
 
-            <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-100">
-              <span className="text-sm text-gray-500">
-                {unreadCount} unread
-              </span>
-              {unreadCount > 0 && (
-                <button
-                  onClick={handleMarkAllRead}
-                  className="text-sm text-brand-primary font-medium"
-                >
-                  Mark all read
-                </button>
-              )}
-            </div>
-
-            <div className="flex-1 overflow-y-auto">
-              {loading ? (
-                <div className="p-4 text-center text-gray-500">
-                  Loading notifications...
-                </div>
-              ) : notifications.length === 0 ? (
-                <div className="p-8 text-center">
-                  <Bell className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500">No notifications yet</p>
-                </div>
-              ) : (
-                <div className="divide-y divide-gray-50">
-                  {notifications.map((notification) => {
-                    const CategoryIcon = categoryIcons[notification.category] || Info;
-                    
-                    return (
-                      <div
-                        key={notification.id}
-                        onClick={() => handleNotificationClick(notification)}
-                        className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
-                          !notification.read ? "bg-blue-50/50" : ""
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-lg shrink-0 ${!notification.read ? "bg-blue-100" : "bg-gray-100"}`}>
-                            <CategoryIcon className={`w-5 h-5 ${typeColors[notification.type]}`} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between gap-2">
-                              <p className="text-sm font-medium text-gray-900 flex-1">
-                                {notification.title}
-                              </p>
-                              {!notification.read && (
-                                <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0 mt-2" />
-                              )}
-                            </div>
-                            <p className="text-sm text-gray-500 mt-1">
-                              {notification.message}
+          <div className="flex-1 overflow-y-auto min-h-0">
+            {loading ? (
+              <div className="p-4 text-center text-gray-500 text-sm">
+                Loading notifications...
+              </div>
+            ) : notifications.length === 0 ? (
+              <div className="p-8 text-center">
+                <Bell className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-500 text-sm">No notifications yet</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-50">
+                {notifications.map((notification) => {
+                  const CategoryIcon = categoryIcons[notification.category] || Info;
+                  
+                  return (
+                    <div
+                      key={notification.id}
+                      onClick={() => handleNotificationClick(notification)}
+                      className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
+                        !notification.read ? "bg-blue-50/50" : ""
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-lg shrink-0 ${!notification.read ? "bg-blue-100" : "bg-gray-100"}`}>
+                          <CategoryIcon className={`w-4 h-4 ${typeColors[notification.type]}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <p className="text-sm font-medium text-gray-900 break-words">
+                              {notification.title}
                             </p>
-                            <div className="flex items-center gap-2 mt-2">
-                              <span className="text-xs text-gray-400">
-                                {formatTime(notification.createdAt)}
-                              </span>
-                              <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 capitalize">
-                                {notification.category}
-                              </span>
-                            </div>
+                            {!notification.read && (
+                              <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0 mt-1" />
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1 break-words">
+                            {notification.message}
+                          </p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <span className="text-[10px] text-gray-400">
+                              {formatTime(notification.createdAt)}
+                            </span>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 capitalize">
+                              {notification.category}
+                            </span>
                           </div>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
-
-          {/* Desktop dropdown */}
-          <div className="hidden md:block absolute right-0 mt-2 w-80 max-w-sm bg-white rounded-xl shadow-xl border border-gray-100 z-30 max-h-96 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="font-semibold text-gray-900 text-sm">Notifications</h3>
-              <span className="text-xs text-gray-500">
-                {unreadCount} unread
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-gray-100 shrink-0">
-              {unreadCount > 0 && (
-                <button
-                  onClick={handleMarkAllRead}
-                  className="text-xs text-brand-primary hover:text-brand-primary-hover font-medium"
-                >
-                  Mark all read
-                </button>
-              )}
-              <button className="text-xs text-gray-500 hover:text-gray-700 font-medium">
-                View all
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto min-h-0">
-              {loading ? (
-                <div className="p-4 text-center text-gray-500 text-sm">
-                  Loading notifications...
-                </div>
-              ) : notifications.length === 0 ? (
-                <div className="p-8 text-center">
-                  <Bell className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500 text-sm">No notifications yet</p>
-                </div>
-              ) : (
-                <div className="divide-y divide-gray-50">
-                  {notifications.map((notification) => {
-                    const CategoryIcon = categoryIcons[notification.category] || Info;
-                    
-                    return (
-                      <div
-                        key={notification.id}
-                        onClick={() => handleNotificationClick(notification)}
-                        className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
-                          !notification.read ? "bg-blue-50/50" : ""
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-lg shrink-0 ${!notification.read ? "bg-blue-100" : "bg-gray-100"}`}>
-                            <CategoryIcon className={`w-4 h-4 ${typeColors[notification.type]}`} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between gap-2">
-                              <p className="text-sm font-medium text-gray-900 flex-1">
-                                {notification.title}
-                              </p>
-                              {!notification.read && (
-                                <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0 mt-1" />
-                              )}
-                            </div>
-                            <p className="text-xs text-gray-500 mt-1">
-                              {notification.message}
-                            </p>
-                            <div className="flex items-center gap-2 mt-2">
-                              <span className="text-[10px] text-gray-400">
-                                {formatTime(notification.createdAt)}
-                              </span>
-                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 capitalize">
-                                {notification.category}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-        </>
+        </div>
       )}
     </div>
   );
