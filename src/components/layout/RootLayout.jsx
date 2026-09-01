@@ -1,5 +1,5 @@
-import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
@@ -7,6 +7,12 @@ import { useCartStore } from "../../features/cart/store/useCartStore";
 
 export const RootLayout = () => {
   const totalItems = useCartStore((state) => state.getTotalItems());
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
 
   return (
     <div className="min-h-screen min-w-0 flex flex-col bg-white text-brand-on-surface font-sans overflow-x-hidden relative">
